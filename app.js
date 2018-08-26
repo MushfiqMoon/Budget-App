@@ -1,8 +1,34 @@
 // BUDGET CONTROLLER
 var budgetCOntroller = (function () {
 
+    var Expances = function (id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+
+    var Income = function (id, description, value) {
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    };
+
+    var data = {
+        allItem: {
+            inc: [],
+            exp: []
+        },
+        totals: {
+            inc: 0,
+            exp: 0
+
+        }
+    }
+
 
 })()
+
+
 
 
 // UI CONTROLLER
@@ -25,7 +51,7 @@ var UIcontroller = (function () {
             }
 
         },
-        getDOMstrings: function(){
+        getDOMstrings: function () {
             return DOMstrings;
         }
     }
@@ -37,9 +63,23 @@ var UIcontroller = (function () {
 // GLOBAL APP CONTROLLER
 var controller = (function (budgetctrl, UIctrl) {
 
-    var DOM = UIcontroller.getDOMstrings();
+    var setupEventListener = function () {
+
+        var DOM = UIcontroller.getDOMstrings();
+
+        document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem)
+
+        document.addEventListener('keypress', function (e) {
+
+            if (e.keyCode === 13 || e.which === 13) {
+                ctrlAddItem();
+            }
+        })
+    };
+
 
     var ctrlAddItem = function () {
+
         // 1. Get the field input data
         var input = UIcontroller.getinpt()
 
@@ -56,37 +96,20 @@ var controller = (function (budgetctrl, UIctrl) {
 
 
 
-    }
+    };
 
-    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem)
-
-    document.addEventListener('keypress', function (e) {
-
-        if (e.keyCode === 13 || e.which === 13) {
-
-
-            ctrlAddItem();
-
-
+    return {
+        init: function () {
+            console.log('Aplication Started');
+            setupEventListener();
         }
-
-
-
-    })
+    };
 
 
 })(budgetCOntroller, UIcontroller)
 
 
-
-
-
-
-
-
-
-
-
+controller.init()
 
 
 
